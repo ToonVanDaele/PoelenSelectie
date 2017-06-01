@@ -40,11 +40,19 @@ getSimilarLandUse <- function(mypoel = "BW_40557") {
   mat_lgb_conv <- as.matrix(lgb_conv[,-c(1)])
   
   # Bereken afstanden
-  #MD <- mahalanobis(mat_lgb_conv, v_lgb_mypoel, cov(mat_lgb_conv)) # eventueel later
-  MD <- mahalanobis(mat_lgb_conv, v_lgb_mypoel, diag(9))
+  d_maha <- mahalanobis(m_lgbspr, v_lgb_mypoel, cov_lgb)
+  d_norm <- mahalanobis(m_lgbspr, v_lgb_mypoel, diag(diag(cov_lgb)))
+  d_eucl <- mahalanobis(m_lgbspr, v_lgb_mypoel, diag(dim(cov_lgb)[1]))
   
-  # afstanden samenvoegen met IDs conventionele poelen en id biopoel
-  df_dist <- data.frame(bio_ID = mypoel, conv_ID = lgb_conv[,"BW_ID"], dist = MD)
+  # Afstanden samenvoegen met IDs poelen en ID biopoel
+  df <- data.frame(bio_ID = mypoel, BW_ID = lgbspr[,"BW_ID"], 
+                   d_maha, d_norm, d_eucl, stringsAsFactors = FALSE)
+  
+  # Lijst met conv poelen < 3km van de biopoel 'mypoel'
+  conv_sel <- poeldist %>%
+    dplyr::filter(BW_ID == mypoel) %>%
+    dplyr::select(BW_ID_ConPoel) %>%
+    .[["BW_ID_ConPoel"]]
   
   # Sorteren van laag naar hoog en de 10 eerst 10 records nemen
   df_dist_top10 <- df_dist %>%
