@@ -15,11 +15,12 @@ colnames(lgb)[1] <- "ID"
 lndbw  <- read.csv("lndbw_agg_buffer_biopct.txt")
 colnames(lndbw)[1] <- "ID"
 
-# Oppervlaktes voor elk landgebruik per poel buffer = 500m
+# Data frame met de procentuele oppervlaktes voor elk landgebruik per poel (buffer = 500m)
 lgbspr <- lgb %>%
-  dplyr::filter(BUFF == 500) %>%
-  dplyr::select(BW_ID, LGB_ORCA, buff_pct) %>%
-  tidyr::spread(LGB_ORCA, buff_pct, fill = 0)
+  dplyr::filter(BUFF == 500) %>%                    # selectie buffer
+  dplyr::select(BW_ID, LGB_ORCA, buff_pct) %>%      # Selectie variabelen
+  tidyr::spread(LGB_ORCA, buff_pct, fill = 0) %>%   # voor elk landgebruik een kolom met de oppervlakte (%)
+  dplyr::select(-overig)                            # de variabele 'overig' laten vallen (komt weinig voor)
 
 
 # Een functie die voor elke biopoel, de 10 meest nabije (gelijkaardige)
