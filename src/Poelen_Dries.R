@@ -5,12 +5,12 @@ library(tidyr)
 
 # Inlezen data en enkele aanpassingen
 
-poelbio <- read.csv("bio_poelen_id.txt")
+poelbio <- read.csv("bio_poelen_id.txt", stringsAsFactors = FALSE)
 colnames(poelbio)[1] <- "BioID"
-poeldist <- read.csv("poelen_dist.txt")
+poeldist <- read.csv("poelen_dist.txt", stringsAsFactors = FALSE)
 colnames(poeldist)[1] <- "ID"
 poeldist <- poeldist[,c(1,3,4,5,6,7)]
-lgb <- read.csv("lgb_agg_buff.txt")
+lgb <- read.csv("lgb_agg_buff.txt", stringsAsFactors = FALSE)
 colnames(lgb)[1] <- "ID"
 lndbw  <- read.csv("lndbw_agg_buffer_biopct.txt")
 colnames(lndbw)[1] <- "ID"
