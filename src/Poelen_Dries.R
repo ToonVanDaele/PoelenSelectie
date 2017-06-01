@@ -144,4 +144,4 @@ ggplot(df_plot, aes(x = akker, y = cultuurgrasland)) + geom_point() +
   geom_point(aes(x = df_bio$akker, y = df_bio$cultuurgrasland), color = "red") +
   coord_fixed()
 
-
+## Extra tekst op het einde van het script
