@@ -50,6 +50,10 @@ getSimilarLandUse <- function(mypoel = "BW_40557") {
   df_dist_top10 <- df_dist %>%
     dplyr::arrange(dist) %>%
     dplyr::slice(1:10)
+  # Ranking berekenen voor elke afstandsmaat
+  df$r_maha <- rank(df$d_maha)
+  df$r_norm <- rank(df$d_norm)
+  df$r_eucl <- rank(df$d_eucl)
   
   return(df_dist_top10)
 }  
